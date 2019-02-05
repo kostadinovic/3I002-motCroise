@@ -3,12 +3,22 @@ package pobj.motx.tme1;
 import java.util.List;
 import java.util.ArrayList;
 
+/** 
+ * classe qui nous permet de trouver tout les emplacements des mots sur la grille
+ * @author nemanja
+ *
+ */
+
 
 public class GrillePlaces {
-	private Grille grille;
-	private List<Emplacement> places;
-	private int nbHorizontaux;
-
+	private Grille grille; /** la grille */
+	private List<Emplacement> places; /** la liste qui contient les places des mots */
+	private int nbHorizontaux; /** nombre de mots */
+	
+	/**
+	 * calcul les emplacements de mots que cotnient la grille grille
+	 * @param grille
+	 */
 	public GrillePlaces(Grille grille) {
 		this.grille = grille;
 		places = new ArrayList<Emplacement>();
@@ -21,14 +31,25 @@ public class GrillePlaces {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return le nombre de places
+	 */
 	public List<Emplacement> getPlaces(){
 		return places;
 	}
 	
+	/**
+	 * 
+	 * @return nombre de mots horizontaux
+	 */
 	public int getNbHorizontal() {
 		return nbHorizontaux;
 	}
 	
+	/** 
+	 * fonction d'affichage
+	 */
 	public String toString() {
 		String s ="";
 		for (Emplacement e : places) {
@@ -37,6 +58,11 @@ public class GrillePlaces {
 		return s;
 	}
 	
+	/**
+	 * retourne la liste des mots sur la ligne
+	 * @param lig
+	 * @return
+	 */
 	private List<Case> getLig(int lig){
 		List<Case> tmp = new ArrayList<Case>();
 		for (int i = 0; i < grille.nbCol(); i++) 
@@ -44,6 +70,11 @@ public class GrillePlaces {
 		return tmp;
 	}
 	
+	/**
+	 * retourne la liste des mots sur la colonnes col
+	 * @param col
+	 * @return
+	 */
 	private List<Case> getCol(int col){
 		List<Case> tmp = new ArrayList<Case>();
 		for (int i = 0; i < grille.nbLig(); i++) 
