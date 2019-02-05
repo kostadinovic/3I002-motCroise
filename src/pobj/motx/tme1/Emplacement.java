@@ -23,5 +23,9 @@ public class Emplacement {
 		return lettres.size();
 	}
 	
-	
+	public void add(Case c) {
+		if(c !=null) {
+			lettres.add(c);
+		}
+	}	
 }
