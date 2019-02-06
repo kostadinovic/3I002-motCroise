@@ -1,5 +1,8 @@
 package pobj.motx.tme2;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +77,23 @@ public class Dictionnaire {
 		} else {
 			return "Dico size =" + size();
 		}
+	}
+	
+	/**
+	 * Création d'un dictionnaire à partir d'un fichier
+	 * @param path le chemin du fichier ou se trouve le dictionnaire
+	 * @return une instance de la classe Dictionnaire
+	 */
+	public static Dictionnaire loadDictionnaire(String path) {
+		Dictionnaire dico = new Dictionnaire();
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+			for(String line = br.readLine(); line != null ; line = br.readLine()) {
+				dico.add(line);
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return dico;
 	}
 	
 }
