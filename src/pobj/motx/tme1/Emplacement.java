@@ -49,5 +49,14 @@ public class Emplacement {
 		if(c !=null) {
 			lettres.add(c);
 		}
-	}	
+	}
+	
+	/**
+	 * accede à la liste des cases de l'emplacement
+	 * 
+	 * @return la liste des lettres de l'emplacement
+	 */
+	public List<Case> getCases(){
+		return this.lettres;
+	}
 }

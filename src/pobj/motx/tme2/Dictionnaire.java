@@ -96,4 +96,47 @@ public class Dictionnaire {
 		return dico;
 	}
 	
+	/**
+	 * modifiera le dictionnaire pour ne garder que les mots dont la ième lettre est c
+	 * 
+	 * @param c une lettre utilisé pour le filtrage
+	 * @param i l'index de la lettre c dans les mot
+	 * @return Dictionnaire qui contient les mots qui ont comme lettre c a la i-éme position
+	 * 
+	 */
+	
+	public int filtreParLettre(char c, int i) {
+		List<String> listeDeMots = new ArrayList<>();
+		int cpt = 0;
+		for (String mot : mots) {
+			if (mot.charAt(i) == c)
+				listeDeMots.add(mot);
+			else
+				cpt++;
+		}
+		mots = listeDeMots;
+		return cpt;
+	}
+	
+	public int filterParEnsembleDeLettrePo(int i, EnsembleLettre ensembleLettre) {
+		int cpt =0;
+		List<String> listeDeMots= new ArrayList<>();
+		for (String mot : this.mots) {
+			if (ensembleLettre.contains(mot.charAt(i))) {
+				listeDeMots.add(mot);
+			} else
+				cpt++;
+		}
+		mots =listeDeMots;
+		return cpt;
+	}
+	
+	public EnsembleLettre ensembleLettrePos(int i) {
+		EnsembleLettre ensLettre = new EnsembleLettre();
+		for (String m : mots) {
+			ensLettre.add(m.charAt(i));
+		}
+		return ensLettre;
+	}
+	
 }

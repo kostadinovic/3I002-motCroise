@@ -97,4 +97,25 @@ public class GrillePlaces {
 		if(e.size()> 1)
 			places.add(e);
 	}
+	
+	/**
+	 * ajoute dans le m-iéme emplacment de la grille le mot qui est soluce 
+	 * 
+	 * @param m est index de l'emplacment à remplir avec les lettre du mot soluce
+	 * @param soluce est le mot à ajouter dans le m-iéme emplacement de la grille
+	 * @return une nouvelle grille avec le m-iéme emplacement contenant soluce
+	 */
+	public GrillePlaces fixer(int m, String soluce) {
+		Grille copy = this.grille.copy();
+		GrillePlaces grillePlaces2 = new GrillePlaces(copy);
+		Emplacement mEmp = grillePlaces2.getPlaces().get(m);
+		int i = 0;
+		for (Case c : mEmp.getCases()) {
+			c.setChar(soluce.charAt(i));
+			i++;
+		}
+		return grillePlaces2;
+	}
+	
+	
 }
