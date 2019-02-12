@@ -14,8 +14,8 @@ public class CroixContrainte implements IContrainte {
 	}
 
 	public int reduce(GrillePotentiel grille) {
-		EnsembleLettre liste1 = grille.getMotsPot().get(m1).ensembleLettreInPos(c1);
-		EnsembleLettre liste2 = grille.getMotsPot().get(m2).ensembleLettreInPos(c2);
+		EnsembleLettre liste1 = grille.getMotsPot().get(m1).ensembleLettrePos(c1);
+		EnsembleLettre liste2 = grille.getMotsPot().get(m2).ensembleLettrePos(c2);
 		EnsembleLettre s = new EnsembleLettre(liste1);
 		s.retainAll(liste2);
 		int nombreDeMotFiltrees = 0;
