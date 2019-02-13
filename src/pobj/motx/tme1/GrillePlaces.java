@@ -106,15 +106,16 @@ public class GrillePlaces {
 	 * @return une nouvelle grille avec le m-iéme emplacement contenant soluce
 	 */
 	public GrillePlaces fixer(int m, String soluce) {
-		Grille copy = this.grille.copy();
-		GrillePlaces grillePlaces2 = new GrillePlaces(copy);
-		Emplacement mEmp = grillePlaces2.getPlaces().get(m);
-		int i = 0;
-		for (Case c : mEmp.getCases()) {
-			c.setChar(soluce.charAt(i));
+		Grille gCopie=grille.copy();
+		List<Case> cases = this.getPlaces().get(m).getCase();
+		int i=0;
+		for (Case c : cases){
+			char lettre=soluce.charAt(i);
+			gCopie.getCase(c.getLig(), c.getCol()).setChar(lettre);
 			i++;
 		}
-		return grillePlaces2;
+		GrillePlaces gp=new GrillePlaces (gCopie);
+		return gp;
 	}
 	
 	

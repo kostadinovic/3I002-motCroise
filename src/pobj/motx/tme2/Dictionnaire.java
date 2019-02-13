@@ -119,15 +119,15 @@ public class Dictionnaire {
 	}
 	
 	public int filterParEnsembleDeLettrePo(int i, EnsembleLettre ensembleLettre) {
-		int cpt =0;
-		List<String> listeDeMots= new ArrayList<>();
+		int cpt = 0;
+		List<String> cible = new ArrayList<>();
 		for (String mot : this.mots) {
 			if (ensembleLettre.contains(mot.charAt(i))) {
-				listeDeMots.add(mot);
+				cible.add(mot);
 			} else
 				cpt++;
 		}
-		mots =listeDeMots;
+		mots = cible;
 		return cpt;
 	}
 	
@@ -138,5 +138,19 @@ public class Dictionnaire {
 		}
 		return ensLettre;
 	}
+	
+	public EnsembleLettre charAt(int index) {
+		if (mots.isEmpty()) {
+			return new EnsembleLettre();
+		}
+		EnsembleLettre l = new EnsembleLettre();
+		for (String mot : mots) {
+			l.add(mot.charAt(index));
+		}
+	    return l;
+	}
+	
+
+
 	
 }

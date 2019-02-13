@@ -8,52 +8,59 @@ public class GrillePotentiel {
 	private GrillePlaces grille;
 	private Dictionnaire dico;
 	private List<Dictionnaire> motsPot;
-	private GrillePlaces places;
+	//private GrillePlaces places;
 	private List<IContrainte> contraintes;
 	
-	
-	public GrillePotentiel(GrillePlaces grille, Dictionnaire dicoComplet, List<Dictionnaire> motsPot) {
-		this.grille = grille;
-		this.dico = dicoComplet;
-		this.contraintes = new ArrayList<>();
-		this.motsPot = motsPot;
-		int i=0;
-			for (Emplacement emp : grille.getPlaces()) {
-				this.motsPot.get(i).filtreLongueur(emp.size());
-				int j=0;
-				for (Case c : emp.getCases()) {
-					if (!(c.isPleine() || c.isVide())) 
-					   this.motsPot.get(i).filtreParLettre(c.getChar(),j);
-					j++;	
-				}
-				System.out.println(this.motsPot.get(i).size());
-				i++;	
-			}
-			contrainte(grille);
-			propage();
-	}
 	
 	public GrillePotentiel(GrillePlaces grille, Dictionnaire dicoComplet) {
 		this.grille = grille;
 		this.dico = dicoComplet;
 		this.contraintes = new ArrayList<>();
 		motsPot =new ArrayList<Dictionnaire>();
+		
 		filtre(grille,dicoComplet);
-		contrainte(grille);
-		propage();
+		checkContrainte();
+		//propage();
 	}
 	
 	public boolean isDead() {
-		boolean dead = false;
-		for (Dictionnaire dico : motsPot) {
-			dead = (dico.size() == 0);
+		for(Dictionnaire d:motsPot){
+			if(d.size()==0) {
+				return true;
+			}
 		}
-		return dead;
+		return false;
+	}
+	
+	public List<Dictionnaire> getMotsPot() {
+		return motsPot;
+	}
+	
+	public void filtre(GrillePlaces grille , Dictionnaire dicoComplet) {
+		int j = 0;
+		for (Emplacement emplacement : grille.getPlaces()) {
+			Dictionnaire dico = dicoComplet.copy();
+			dico.filtreLongueur(emplacement.size());
+			int i = 0;
+			for (Case c : emplacement.getCase()) {
+				if (!(c.isPleine() || c.isVide())) {
+					dico.filtreParLettre(c.getChar(), i);
+				}
+				i++;
+			}
+			motsPot.add(dico);
+			j++;
+		}
+		
 	}
 	
 	public GrillePotentiel fixer(int m, String soluce) {
-		GrillePotentiel gp = new GrillePotentiel(this.getPlaces().fixer(m, soluce), this.dico,this.copy(motsPot));
+		GrillePotentiel gp = new GrillePotentiel(grille.fixer(m, soluce),dico);;
 		return gp;
+	}
+	
+	public List<IContrainte> getContraintes(){
+		return contraintes;
 	}
 	
 	public List<Dictionnaire> copy(List<Dictionnaire> motsPot){
@@ -64,18 +71,18 @@ public class GrillePotentiel {
 		return dicoCopy;
 	}
 	
-	/**
-	 * renvoie la liste des emplacement dans la grille
-	 * 
-	 * @return places (une liste d'emplacements)
-	 */
-	public GrillePlaces getPlaces() {
-		return places;
+	/*
+	
+
+	
+	public List<Dictionnaire> copy(List<Dictionnaire> motsPot){
+		List<Dictionnaire> dicoCopy = new ArrayList<Dictionnaire>();
+		for (Dictionnaire dico : motsPot) {
+			dicoCopy.add(dico.copy());
+		}
+		return dicoCopy;
 	}
 	
-	public List<Dictionnaire> getMotsPot() {
-		return motsPot;
-	}
 	
 	
 	private boolean propage() {
@@ -94,52 +101,26 @@ public class GrillePotentiel {
 			}
 		}
 	}
+	 */
 	
-	public void filtre(GrillePlaces grille , Dictionnaire dicoComplet) {
-		int j = 0;
-		for (Emplacement emplacement : grille.getPlaces()) {
-			Dictionnaire dico = dicoComplet.copy();
-			dico.filtreLongueur(emplacement.size());
-			int i = 0;
-			for (Case c : emplacement.getCases()) {
-				if (!(c.isPleine() || c.isVide())) {
-					dico.filtreParLettre(c.getChar(), i);
-				}
-				i++;
-			}
-			motsPot.add(dico);
-			j++;
-		}
-		
-	}
-	
-	public void contrainte(GrillePlaces grille) {
-		for (int i = 0; i < grille.getNbHorizontal(); i++) {
-			
-			Emplacement m1 = grille.getPlaces().get(i);
-			
-			for (int j = grille.getNbHorizontal(); j < grille.getPlaces().size(); j++) {
-				 //pb retour j a effacer
-				Emplacement m2 = grille.getPlaces().get(j);
-				
-				for (int c1 = 0; c1 < m1.getCases().size(); c1++) {
-					
-					for (int c2 = 0; c2 < m2.getCases().size(); c2++) {
-						
-						if (m1.getCases().get(c1).equals(m2.getCases().get(c2)) && m1.getCases().get(c1).isVide()) {
-							
-							IContrainte contrainte = new CroixContrainte(i, c1, j, c2);
-							
-							if (!contraintes.contains(contrainte)) {
-								
-								contraintes.add(contrainte);
+	public void checkContrainte(){ 
+		int m1=0;
+		for(Emplacement e1:grille.getPlaces()){
+			int m2=0;
+			for(Emplacement e2:grille.getPlaces()){
+				if(e1.estHorizontal()&& e2.estVertical()){
+					for(int c1=0;c1<e1.size();c1++) {
+						for(int c2=0;c2<e2.size();c2++){
+							if((e1.getCase(c1)==e2.getCase(c2))&&(e1.getCase(c1).isVide())){
+								contraintes.add(new CroixContrainte(m1,c1,m2,c2));
 							}
 						}
 					}
 				}
+				m2++;
 			}
-		}	
-	}
+			m1++;}
+		}
 	
 
 }

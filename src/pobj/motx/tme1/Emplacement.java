@@ -56,7 +56,19 @@ public class Emplacement {
 	 * 
 	 * @return la liste des lettres de l'emplacement
 	 */
-	public List<Case> getCases(){
+	public List<Case> getCase(){
 		return this.lettres;
 	}
+	
+	public Case getCase(int i) {
+		return lettres.get(i);
+	}
+	
+	public boolean estVertical(){
+		return (this.getCase(0).getLig())<(this.getCase(1).getLig());
+	}
+	
+	public boolean estHorizontal(){
+		return (this.getCase(0).getCol())<(this.getCase(1).getCol());
+}
 }
