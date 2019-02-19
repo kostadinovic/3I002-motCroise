@@ -21,6 +21,7 @@ public class GrillePotentiel {
 		filtre(grille,dicoComplet);
 		checkContrainte();
 		//propage();
+		//grille non rempli pb??
 	}
 	
 	public boolean isDead() {
